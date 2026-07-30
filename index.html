@@ -131,18 +131,23 @@
   .login-brand { text-align: center; margin-bottom: 34px; }
   .login-logo { width: 220px; height: auto; margin: 0 auto; }
   .login-brand .tag { color: rgba(244,248,250,0.72); font-size: 0.85rem; margin-top: 16px; }
+  .install-block { display: none; margin: 26px 0 28px; }
+  .install-block.show { display: block; }
   .install-btn {
-    display: none; align-items: center; justify-content: center; gap: 8px; width: 100%;
-    margin: 18px 0 0; padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 0.88rem;
+    display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+    padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 0.88rem;
     background: linear-gradient(135deg, var(--aqua-bright), var(--aqua)); color: var(--on-accent);
   }
-  .install-btn.show { display: flex; }
   .install-btn svg { width: 17px; height: 17px; }
+  .install-divider {
+    display: flex; align-items: center; gap: 10px; margin: 22px 0;
+    color: rgba(244,248,250,0.4); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .install-divider::before, .install-divider::after { content: ""; flex: 1; height: 1px; background: rgba(244,248,250,0.14); }
   .ios-hint {
-    display: none; margin-top: 14px; padding: 12px 14px; border-radius: 10px; font-size: 0.8rem; line-height: 1.5;
+    display: none; margin-top: 12px; padding: 12px 14px; border-radius: 10px; font-size: 0.8rem; line-height: 1.5;
     background: rgba(244,248,250,0.08); color: rgba(244,248,250,0.82);
   }
-  .ios-hint.show { display: block; }
   .ios-hint svg { width: 14px; height: 14px; display: inline-block; vertical-align: -2px; color: var(--aqua-bright); }
   .field { margin-bottom: 14px; }
   .field label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 6px; color: rgba(244,248,250,0.75); }
@@ -532,14 +537,17 @@
         <img class="login-logo" id="login-logo-img" src="" alt="Infinity Vacation Club" />
         <p class="tag">Área do associado — meus pontos de férias</p>
       </div>
-      <button class="install-btn" id="btn-install-app">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-        Instalar como aplicativo
-      </button>
-      <div class="ios-hint" id="ios-hint">
-        <strong>Instalar no iPhone:</strong> toque em
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0-13l-4 4m4-4l4 4"/><rect x="4" y="9" width="16" height="12" rx="2"/></svg>
-        (Compartilhar) e depois em "Adicionar à Tela de Início".
+      <div class="install-block" id="install-block">
+        <button class="install-btn" id="btn-install-app">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          Instalar como aplicativo
+        </button>
+        <div class="ios-hint" id="ios-hint">
+          <strong>Instalar no iPhone:</strong> toque em
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0-13l-4 4m4-4l4 4"/><rect x="4" y="9" width="16" height="12" rx="2"/></svg>
+          (Compartilhar) e depois em "Adicionar à Tela de Início".
+        </div>
+        <div class="install-divider">ou entre na sua conta</div>
       </div>
       <div class="field">
         <label for="login-cpf">CPF</label>
@@ -1185,22 +1193,24 @@
     window.addEventListener("beforeinstallprompt", function (e) {
       e.preventDefault();
       deferredInstallPrompt = e;
-      var btn = document.getElementById("btn-install-app");
-      if (btn) btn.classList.add("show");
+      document.getElementById("install-block").classList.add("show");
+      document.getElementById("btn-install-app").style.display = "flex";
     });
     document.addEventListener("DOMContentLoaded", function () {
       if (isIos) {
-        var hint = document.getElementById("ios-hint");
-        if (hint) hint.classList.add("show");
+        document.getElementById("install-block").classList.add("show");
+        document.getElementById("ios-hint").style.display = "block";
+        document.getElementById("btn-install-app").style.display = "none";
       }
       var installBtn = document.getElementById("btn-install-app");
-      if (installBtn) {
-        installBtn.addEventListener("click", function () {
-          if (!deferredInstallPrompt) return;
-          deferredInstallPrompt.prompt();
-          deferredInstallPrompt.userChoice.then(function () { deferredInstallPrompt = null; installBtn.classList.remove("show"); });
+      installBtn.addEventListener("click", function () {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then(function () {
+          deferredInstallPrompt = null;
+          document.getElementById("install-block").classList.remove("show");
         });
-      }
+      });
     });
   }
 })();
