@@ -1,0 +1,1067 @@
+<title>Infinity Vacation Club — Meus Pontos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#10263D" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icon-192.png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<style>
+  :root {
+    --ink: #10263D; --ink-soft: #51697D; --bg: #F4F8FA; --surface: #FFFFFF;
+    --frame: #10263D; --gold: #C9821A; --gold-soft: rgba(201,130,26,0.14);
+    --aqua: #0C93B8; --aqua-bright: #22C3E8; --aqua-soft: rgba(34,195,232,0.14);
+    --on-accent: #0B2036;
+    --line: rgba(16,38,61,0.12);
+    --good: #1E7A4C; --good-soft: rgba(30,122,76,0.12);
+    --warn: #B8720C; --warn-soft: rgba(184,114,12,0.12);
+    --bad: #B23B2E; --bad-soft: rgba(178,59,46,0.12);
+    --shadow: 0 1px 2px rgba(16,38,61,0.08), 0 14px 32px -16px rgba(16,38,61,0.35);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #EAF3F8; --ink-soft: #8FAAC0; --bg: #071627; --surface: #10263D; --frame: #04101D;
+      --gold: #F0B54A; --gold-soft: rgba(240,181,74,0.16);
+      --aqua: #3FD4F2; --aqua-bright: #3FD4F2; --aqua-soft: rgba(63,212,242,0.16);
+      --on-accent: #0B2036;
+      --line: rgba(234,243,248,0.14);
+      --good: #4ED18C; --good-soft: rgba(78,209,140,0.14);
+      --warn: #E0A63D; --warn-soft: rgba(224,166,61,0.14);
+      --bad: #E2685A; --bad-soft: rgba(226,104,90,0.14);
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 16px 36px -16px rgba(0,0,0,0.7);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #EAF3F8; --ink-soft: #8FAAC0; --bg: #071627; --surface: #10263D; --frame: #04101D;
+    --gold: #F0B54A; --gold-soft: rgba(240,181,74,0.16);
+    --aqua: #3FD4F2; --aqua-bright: #3FD4F2; --aqua-soft: rgba(63,212,242,0.16);
+    --on-accent: #0B2036;
+    --line: rgba(234,243,248,0.14);
+    --good: #4ED18C; --good-soft: rgba(78,209,140,0.14);
+    --warn: #E0A63D; --warn-soft: rgba(224,166,61,0.14);
+    --bad: #E2685A; --bad-soft: rgba(226,104,90,0.14);
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 16px 36px -16px rgba(0,0,0,0.7);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --ink: #10263D; --ink-soft: #51697D; --bg: #F4F8FA; --surface: #FFFFFF; --frame: #10263D;
+    --gold: #C9821A; --gold-soft: rgba(201,130,26,0.14);
+    --aqua: #0C93B8; --aqua-bright: #22C3E8; --aqua-soft: rgba(34,195,232,0.14);
+    --on-accent: #0B2036;
+    --line: rgba(16,38,61,0.12);
+    --good: #1E7A4C; --good-soft: rgba(30,122,76,0.12);
+    --warn: #B8720C; --warn-soft: rgba(184,114,12,0.12);
+    --bad: #B23B2E; --bad-soft: rgba(178,59,46,0.12);
+    --shadow: 0 1px 2px rgba(16,38,61,0.08), 0 14px 32px -16px rgba(16,38,61,0.35);
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--frame);
+    color: var(--ink);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3,h4 { margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  input, select { font-family: inherit; }
+  button:focus-visible, a:focus-visible, input:focus-visible {
+    outline: 2px solid var(--aqua-bright); outline-offset: 2px;
+  }
+  .tabular { font-variant-numeric: tabular-nums; font-family: "Courier New", ui-monospace, "SF Mono", Menlo, monospace; }
+  .brand-face {
+    font-family: "Century Gothic", "Poppins", "Segoe UI", system-ui, sans-serif;
+  }
+  .hidden { display: none !important; }
+
+  .page {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    overflow-y: auto;
+  }
+  @media (min-width: 640px) { .page { padding: min(28px, 3vh) 16px; } }
+
+  .app-shell {
+    width: 100%;
+    max-width: 430px;
+    background: var(--bg);
+    color: var(--ink);
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  @media (min-width: 640px) {
+    .app-shell {
+      height: min(860px, 94vh);
+      border-radius: 34px;
+      border: 7px solid var(--frame);
+      box-shadow: var(--shadow);
+    }
+  }
+
+  .statusbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 20px 2px;
+    font-size: 0.72rem; font-weight: 700; color: var(--ink-soft);
+    flex: none;
+  }
+  .statusbar .icons { display: flex; gap: 6px; align-items: center; }
+  .statusbar .icons svg { width: 16px; height: 16px; }
+
+  .demo-banner {
+    background: var(--gold-soft); color: var(--gold);
+    font-size: 0.68rem; text-align: center; padding: 6px 14px; flex: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ---------------- LOGIN ---------------- */
+  #screen-login {
+    flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 32px 30px; gap: 0;
+    background: radial-gradient(120% 90% at 25% 0%, #123A57 0%, var(--frame) 55%, #061019 100%);
+    color: #F4F8FA;
+  }
+  .login-brand { text-align: center; margin-bottom: 34px; }
+  .login-logo { width: 220px; height: auto; margin: 0 auto; }
+  .login-brand .tag { color: rgba(244,248,250,0.72); font-size: 0.85rem; margin-top: 16px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 6px; color: rgba(244,248,250,0.75); }
+  .field input {
+    width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid rgba(244,248,250,0.24);
+    background: rgba(244,248,250,0.08); color: #F4F8FA; font-size: 0.95rem;
+  }
+  #screen-login .field input::placeholder { color: rgba(244,248,250,0.45); }
+  #screen-login .btn-ghost { color: rgba(244,248,250,0.75); }
+  #screen-login .btn-ghost:hover { color: #F4F8FA; }
+  .login-error { color: var(--bad); font-size: 0.82rem; margin: -6px 0 12px; min-height: 1em; }
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 13px 18px; border-radius: 10px; font-weight: 700; font-size: 0.95rem;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--aqua-bright), var(--aqua));
+    color: var(--on-accent); margin-top: 8px;
+    box-shadow: 0 10px 22px -10px color-mix(in srgb, var(--aqua-bright) 65%, transparent);
+  }
+  .btn-primary:hover { opacity: 0.92; }
+  .btn-ghost { background: transparent; color: var(--ink-soft); font-weight: 600; font-size: 0.85rem; margin-top: 14px; }
+  .btn-ghost:hover { color: var(--ink); }
+  .login-foot { text-align: center; margin-top: 10px; }
+
+  /* ---------------- APP CHROME ---------------- */
+  #screen-app { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .app-header {
+    padding: 10px 20px 22px; flex: none; display: flex; justify-content: space-between; align-items: flex-start;
+    background: linear-gradient(160deg, var(--frame) 0%, #0A3752 100%);
+    border-radius: 0 0 26px 26px; color: #F4F8FA;
+  }
+  .header-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .header-brand img { height: 20px; width: auto; }
+  .header-brand span { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244,248,250,0.6); }
+  .app-header .greet { font-size: 0.82rem; color: rgba(244,248,250,0.72); }
+  .app-header .name { font-size: 1.15rem; font-weight: 700; margin-top: 2px; color: #F4F8FA; }
+  .tier-pill {
+    display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+    background: var(--gold-soft); color: var(--gold); margin-top: 8px;
+  }
+  .tier-pill svg { width: 13px; height: 13px; }
+  .icon-btn {
+    width: 36px; height: 36px; border-radius: 50%; background: rgba(244,248,250,0.14); border: 1px solid rgba(244,248,250,0.24);
+    display: flex; align-items: center; justify-content: center; flex: none; color: #F4F8FA;
+  }
+
+  .tabpanels { flex: 1; overflow-y: auto; padding: 0 20px 100px; -webkit-overflow-scrolling: touch; }
+  .tabpanel { display: none; flex-direction: column; gap: 18px; padding-top: 4px; }
+  .tabpanel.active { display: flex; }
+
+  /* balance card */
+  .balance-card {
+    background: linear-gradient(135deg, #123A57 0%, var(--frame) 55%, #0A2440 100%); color: #F4F8FA;
+    border-radius: 20px; padding: 20px 22px 18px; position: relative; overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .balance-card::before {
+    content: ""; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(115deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 16px);
+  }
+  .balance-card::after {
+    content: ""; position: absolute; right: -34px; top: -34px; width: 130px; height: 130px; border-radius: 50%;
+    border: 18px solid rgba(240,181,74,0.14);
+  }
+  .balance-top { display: flex; align-items: center; gap: 11px; margin-bottom: 16px; position: relative; z-index: 1; }
+  .balance-chip {
+    width: 34px; height: 24px; border-radius: 5px; flex: none;
+    background: repeating-linear-gradient(180deg, rgba(0,0,0,0.28) 0 2px, transparent 2px 7px), linear-gradient(135deg, #FFD98A, var(--gold));
+  }
+  .balance-card .lbl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(244,248,250,0.65); }
+  .balance-card .amt { font-size: 2.4rem; font-weight: 800; color: var(--gold); position: relative; z-index: 1; }
+  .balance-card .amt small { font-size: 0.9rem; font-weight: 600; color: rgba(244,248,250,0.65); }
+  .balance-foot {
+    display: flex; justify-content: space-between; align-items: flex-end; margin-top: 16px; padding-top: 12px;
+    border-top: 1px dashed rgba(244,248,250,0.18); position: relative; z-index: 1;
+  }
+  .balance-foot .member, .balance-foot .exp {
+    font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(244,248,250,0.5);
+  }
+  .balance-foot .exp { text-align: right; }
+  .balance-foot strong {
+    display: block; font-size: 0.82rem; text-transform: none; letter-spacing: 0; font-weight: 700;
+    color: #F4F8FA; margin-top: 3px;
+  }
+  .balance-foot .exp strong { color: var(--gold); }
+
+  .quick-row { display: flex; gap: 10px; }
+  .quick-btn {
+    flex: 1; background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 0.74rem; font-weight: 600;
+  }
+  .quick-btn svg { width: 20px; height: 20px; color: var(--aqua); }
+
+  .section-title { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-soft); font-weight: 700; }
+
+  .upcoming-card {
+    background: var(--aqua-soft); border: 1px solid var(--line); border-radius: 14px; padding: 16px;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  }
+  .upcoming-card .dest { font-weight: 700; }
+  .upcoming-card .meta { font-size: 0.78rem; color: var(--ink-soft); margin-top: 2px; }
+  .upcoming-card .pts { color: var(--aqua); font-weight: 700; font-size: 0.9rem; }
+
+  .dest-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+  .dest-mini { flex: none; width: 128px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .dest-mini .art { height: 64px; cursor: pointer; transition: transform 0.2s ease; }
+  .dest-mini .art:active { transform: scale(0.96); }
+  @media (prefers-reduced-motion: reduce) { .dest-mini .art { transition: none; } }
+  .dest-mini .body { padding: 8px 10px 10px; }
+  .dest-mini h4 { font-size: 0.82rem; }
+  .dest-mini .cost { font-size: 0.7rem; color: var(--ink-soft); margin-top: 2px; }
+
+  /* destinos grid */
+  .dest-search {
+    display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1.5px solid var(--line);
+    border-radius: 12px; padding: 11px 14px; margin-bottom: 4px; color: var(--ink-soft);
+  }
+  .dest-search svg { width: 18px; height: 18px; flex: none; }
+  .dest-search input {
+    border: none; background: none; outline: none; color: var(--ink); font-size: 0.92rem; width: 100%; font-family: inherit;
+  }
+  .dest-search input::placeholder { color: var(--ink-soft); }
+  .dest-empty { text-align: center; color: var(--ink-soft); font-size: 0.9rem; padding: 20px 0; }
+  .dest-list { display: flex; flex-direction: column; gap: 14px; }
+  .dest-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
+  .dest-card .art { height: 96px; position: relative; cursor: pointer; transition: filter 0.2s ease; }
+  .dest-card .art:hover { filter: brightness(1.06); }
+  .dest-card .art:active { filter: brightness(0.94); }
+  @media (prefers-reduced-motion: reduce) { .dest-card .art { transition: none; } }
+
+  /* ---------------- LIGHTBOX ---------------- */
+  .lightbox {
+    position: absolute; inset: 0; z-index: 35; background: rgba(4,10,17,0.72);
+    display: flex; align-items: center; justify-content: center; padding: 26px;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+  }
+  .lightbox.show { opacity: 1; pointer-events: auto; }
+  @media (prefers-reduced-motion: reduce) { .lightbox { transition: none; } }
+  .lightbox-card {
+    width: 100%; max-height: 100%; overflow: hidden; border-radius: 18px; background: var(--surface);
+    box-shadow: var(--shadow); transform: scale(0.92) translateY(10px); transition: transform 0.25s ease;
+  }
+  .lightbox.show .lightbox-card { transform: scale(1) translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .lightbox-card { transition: none; } }
+  .lightbox-photo {
+    height: 220px; position: relative; background-size: cover; background-position: center;
+    transition: background-image 0.15s ease;
+  }
+  .lightbox-dots { position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 6px; }
+  .lightbox-dots button { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.45); padding: 0; }
+  .lightbox-dots button.active { background: #fff; width: 16px; border-radius: 4px; }
+  .lightbox-close {
+    position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(4,10,17,0.5); color: #fff; display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox-info { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 8px; }
+  .lightbox-info .region { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); }
+  .lightbox-info h3 { font-size: 1.15rem; }
+  .lightbox-info p { color: var(--ink-soft); font-size: 0.9rem; }
+  .lightbox-info .row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .lightbox-info .ppn { font-size: 1rem; font-weight: 700; color: var(--gold); }
+  .lightbox-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .lightbox-tags span {
+    display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 600;
+    background: var(--aqua-soft); color: var(--aqua); padding: 5px 10px; border-radius: 999px;
+  }
+  .lightbox-tags svg { width: 11px; height: 11px; flex: none; }
+  .lightbox-tips { display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+  .lightbox-tips .tip { display: flex; gap: 8px; align-items: flex-start; font-size: 0.82rem; line-height: 1.4; }
+  .lightbox-tips .tip svg { width: 15px; height: 15px; flex: none; margin-top: 2px; }
+  .lightbox-tips .tip.good svg { color: var(--good); }
+  .lightbox-tips .tip.caution svg { color: var(--warn); }
+  .lightbox-tips .tip strong { font-weight: 700; }
+  .dest-card .body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .dest-card h3 { font-size: 1.02rem; }
+  .dest-card .region { font-size: 0.72rem; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+  .dest-card .blurb { font-size: 0.85rem; color: var(--ink-soft); }
+  .dest-card .row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+  .dest-card .ppn { font-size: 0.95rem; font-weight: 700; color: var(--gold); }
+  .dest-card .ppn small { font-weight: 500; color: var(--ink-soft); font-size: 0.7rem; }
+  .btn-resgatar {
+    background: linear-gradient(135deg, var(--aqua-bright), var(--aqua)); color: var(--on-accent);
+    padding: 9px 16px; border-radius: 9px; font-size: 0.82rem; font-weight: 700;
+  }
+
+  /* extrato */
+  .hist-item { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line); gap: 10px; }
+  .hist-item:last-child { border-bottom: none; }
+  .hist-item .desc { font-size: 0.88rem; font-weight: 600; }
+  .hist-item .date { font-size: 0.74rem; color: var(--ink-soft); margin-top: 2px; }
+  .hist-item .delta { font-weight: 700; font-size: 0.92rem; flex: none; }
+  .hist-item .delta.pos { color: var(--good); }
+  .hist-item .delta.neg { color: var(--bad); }
+  .hist-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 4px 16px; }
+
+  /* perfil */
+  .profile-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 18px 6px; }
+  .profile-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.88rem; }
+  .profile-row:last-child { border-bottom: none; }
+  .profile-row .k { color: var(--ink-soft); }
+  .profile-row .v { font-weight: 700; }
+  .tier-table { display: flex; flex-direction: column; gap: 8px; }
+  .tier-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); font-size: 0.85rem; }
+  .tier-row.current { border-color: var(--gold); background: var(--gold-soft); }
+  .tier-row .tn { font-weight: 700; }
+  .tier-row .tp { color: var(--ink-soft); }
+  .btn-logout { background: var(--bad-soft); color: var(--bad); font-weight: 700; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.88rem; }
+
+  /* ---------------- TAB BAR ---------------- */
+  .tabbar {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 78px; flex: none;
+    background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(8px);
+    border-top: 1px solid var(--line);
+    display: flex;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+  .tab-btn {
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    color: var(--ink-soft); font-size: 0.68rem; font-weight: 600;
+  }
+  .tab-btn svg { width: 21px; height: 21px; }
+  .tab-btn.active { color: var(--aqua); }
+
+  /* ---------------- SHEET (booking) ---------------- */
+  .sheet-backdrop {
+    position: absolute; inset: 0; background: rgba(7,22,32,0.55); z-index: 20;
+    display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+  }
+  .sheet-backdrop.show { opacity: 1; pointer-events: auto; }
+  @media (prefers-reduced-motion: reduce) { .sheet-backdrop { transition: none; } }
+  .sheet {
+    background: var(--bg); width: 100%; border-radius: 20px 20px 0 0; padding: 18px 22px 26px;
+    transform: translateY(100%); transition: transform 0.25s ease;
+    max-height: 88%; overflow-y: auto;
+  }
+  .sheet-backdrop.show .sheet { transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .sheet { transition: none; } }
+  .sheet-handle { width: 36px; height: 4px; background: var(--line); border-radius: 999px; margin: 0 auto 14px; }
+  .sheet h3 { font-size: 1.1rem; }
+  .sheet .sub { color: var(--ink-soft); font-size: 0.85rem; margin-top: 2px; }
+  .sheet .field { margin-top: 16px; }
+  .stepper { display: flex; align-items: center; gap: 14px; }
+  .stepper button { width: 38px; height: 38px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line); font-size: 1.1rem; font-weight: 700; }
+  .stepper .n { font-size: 1.1rem; font-weight: 700; min-width: 26px; text-align: center; }
+  .sheet-summary { margin-top: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; }
+  .sheet-summary .row2 { display: flex; justify-content: space-between; }
+  .sheet-summary .total { font-weight: 800; font-size: 1rem; border-top: 1px dashed var(--line); padding-top: 8px; }
+  .sheet-warn { color: var(--bad); font-size: 0.8rem; margin-top: 8px; display: none; }
+  .sheet-warn.show { display: block; }
+  .sheet .btn-primary:disabled { opacity: 0.45; pointer-events: none; }
+
+  .toast {
+    position: absolute; top: 14px; left: 16px; right: 16px; z-index: 30;
+    background: var(--good); color: #08210F; padding: 12px 16px; border-radius: 12px; font-size: 0.85rem; font-weight: 700;
+    box-shadow: var(--shadow); opacity: 0; transform: translateY(-10px); pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease; display: flex; align-items: center; gap: 8px;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+
+  /* ---------------- SPLASH ---------------- */
+  .splash {
+    position: absolute; inset: 0; z-index: 50;
+    background: radial-gradient(120% 90% at 25% 0%, #123A57 0%, var(--frame) 55%, #061019 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px;
+    opacity: 1; filter: blur(0); transition: opacity 0.4s ease, filter 0.4s ease;
+  }
+  .splash.hide { opacity: 0; filter: blur(10px); pointer-events: none; }
+  @media (prefers-reduced-motion: reduce) { .splash { transition: opacity 0.15s linear; } .splash.hide { filter: none; } }
+  .splash-logo { width: 168px; height: auto; }
+  .splash-scene { position: relative; width: 220px; height: 92px; }
+  .splash-sun {
+    position: absolute; top: -6px; right: 18px; width: 34px; height: 34px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #FFDD8A, var(--gold) 70%);
+    box-shadow: 0 0 0 6px rgba(240,181,74,0.16);
+    animation: sunPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes sunPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+  .splash-plane {
+    position: absolute; top: 6px; left: -10px; width: 30px; height: 30px; color: var(--aqua-bright);
+    animation: planeFly 3.2s ease-in-out infinite;
+  }
+  @keyframes planeFly {
+    0% { transform: translate(0, 10px) rotate(0deg); opacity: 0; }
+    12% { opacity: 1; }
+    50% { transform: translate(150px, -6px) rotate(6deg); }
+    88% { opacity: 1; }
+    100% { transform: translate(210px, -14px) rotate(6deg); opacity: 0; }
+  }
+  .splash-palm { position: absolute; bottom: 14px; left: 6px; width: 34px; height: 46px; color: var(--gold); transform-origin: 50% 100%; animation: palmSway 2.8s ease-in-out infinite; }
+  @keyframes palmSway { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+  .splash-case { position: absolute; bottom: 10px; right: 22px; width: 32px; height: 32px; color: var(--aqua); animation: caseBounce 1.6s ease-in-out infinite; }
+  @keyframes caseBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+  .splash-ground { position: absolute; bottom: 6px; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--line), transparent); }
+  @media (prefers-reduced-motion: reduce) {
+    .splash-sun, .splash-plane, .splash-palm, .splash-case { animation: none; }
+    .splash-plane { left: 90px; top: -2px; opacity: 1; }
+  }
+  .splash-foot { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .splash-tag { color: rgba(244,248,250,0.72); font-size: 0.86rem; letter-spacing: 0.02em; }
+  .splash-dots { display: flex; gap: 7px; }
+  .splash-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--aqua-bright); animation: dotPulse 1.2s ease-in-out infinite; }
+  .splash-dots span:nth-child(2) { animation-delay: 0.15s; }
+  .splash-dots span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes dotPulse { 0%,80%,100% { opacity: 0.25; transform: scale(0.8); } 40% { opacity: 1; transform: scale(1.1); } }
+  @media (prefers-reduced-motion: reduce) { .splash-dots span { animation: none; opacity: 0.85; } }
+</style>
+
+<div class="page">
+  <div class="app-shell" id="app-shell">
+    <div class="splash" id="screen-splash">
+      <img class="splash-logo" id="splash-logo-img" src="" alt="Infinity Vacation Club" />
+      <div class="splash-scene" aria-hidden="true">
+        <div class="splash-sun"></div>
+        <svg class="splash-plane" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12l-7-2-3-7-2 1 2 7-6 1-2-2-1.5.5 2 4 4.5 1 8-1-2-4z" transform="translate(0,2) scale(0.9)"/></svg>
+        <svg class="splash-palm" viewBox="0 0 34 46" fill="currentColor"><path d="M17 46V22" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M17 22c-2-8-9-10-16-9 3 6 9 8 16 9z"/><path d="M17 22c2-9 10-11 17-9-3 6-10 8-17 9z"/><path d="M17 20c-1-7-6-10-11-12 1 6 5 10 11 12z"/><path d="M17 20c1-7 7-11 12-12-1 6-6 10-12 12z"/></svg>
+        <svg class="splash-case" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
+        <div class="splash-ground"></div>
+      </div>
+      <div class="splash-foot">
+        <div class="splash-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="splash-tag">Preparando sua área de férias…</p>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span id="clock" class="tabular">09:41</span>
+      <span class="icons" aria-hidden="true">
+        <svg viewBox="0 0 20 14" fill="currentColor"><rect x="0" y="9" width="3" height="5" rx="1"/><rect x="5" y="6" width="3" height="8" rx="1"/><rect x="10" y="3" width="3" height="11" rx="1"/><rect x="15" y="0" width="3" height="14" rx="1"/></svg>
+        <svg viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 5.5a12 12 0 0 1 16 0"/><path d="M5 8.5a7.5 7.5 0 0 1 10 0"/><circle cx="10" cy="12" r="1.3" fill="currentColor" stroke="none"/></svg>
+        <svg viewBox="0 0 25 14" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1" y="1" width="20" height="12" rx="3"/><rect x="3.5" y="3.5" width="14" height="7" rx="1.5" fill="currentColor" stroke="none"/><rect x="22" y="5" width="2.2" height="4" rx="1" fill="currentColor" stroke="none"/></svg>
+      </span>
+    </div>
+    <div class="demo-banner">Protótipo de demonstração — pontos, planos e preços são valores de exemplo (edite CONFIG no código).</div>
+
+    <!-- LOGIN -->
+    <div id="screen-login">
+      <div class="login-brand">
+        <img class="login-logo" id="login-logo-img" src="" alt="Infinity Vacation Club" />
+        <p class="tag">Área do associado — meus pontos de férias</p>
+      </div>
+      <div class="field">
+        <label for="login-cpf">CPF</label>
+        <input id="login-cpf" type="text" inputmode="numeric" placeholder="000.000.000-00" autocomplete="off" />
+      </div>
+      <div class="field">
+        <label for="login-pass">Senha</label>
+        <input id="login-pass" type="password" placeholder="Enviada por e-mail" autocomplete="off" />
+      </div>
+      <p class="login-error" id="login-error"></p>
+      <button class="btn btn-primary" id="btn-login">Entrar</button>
+      <button class="btn-ghost" id="btn-forgot" style="width:100%;margin-top:6px;">Esqueci minha senha</button>
+      <div class="login-foot">
+        <button class="btn-ghost" id="btn-demo">Entrar como convidado (demo) →</button>
+      </div>
+    </div>
+
+    <!-- APP -->
+    <div id="screen-app" class="hidden">
+      <div class="toast" id="toast">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="18" height="18"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>
+        <span id="toast-text">Resgate confirmado!</span>
+      </div>
+
+      <div class="app-header">
+        <div>
+          <div class="header-brand"><img id="header-logo-mark" alt="" /><span>Infinity Vacation Club</span></div>
+          <div class="greet">Olá,</div>
+          <div class="name" id="member-name">—</div>
+          <div class="tier-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 8l4 3 5-6 5 6 4-3-2 10H5L3 8z"/></svg>
+            <span id="member-tier">—</span>
+          </div>
+        </div>
+        <button class="icon-btn" id="btn-refresh" aria-label="Atualizar" title="Atualizar saldo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 4v4h-4M6 20v-4h4"/></svg>
+        </button>
+      </div>
+
+      <div class="tabpanels">
+        <!-- DASHBOARD -->
+        <section class="tabpanel active" id="tab-dashboard">
+          <div class="balance-card">
+            <div class="balance-top">
+              <div class="balance-chip"></div>
+              <span class="lbl">Saldo disponível</span>
+            </div>
+            <div class="amt tabular"><span id="dash-points">0</span> <small>pts</small></div>
+            <div class="balance-foot">
+              <div class="member">Titular<strong id="balance-member">—</strong></div>
+              <div class="exp">Pontos a vencer<strong id="dash-expiring">—</strong></div>
+            </div>
+          </div>
+
+          <div class="quick-row">
+            <button class="quick-btn" data-goto="tab-destinos">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+              Resgatar
+            </button>
+            <button class="quick-btn" data-goto="tab-extrato">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"/></svg>
+              Extrato
+            </button>
+            <button class="quick-btn" data-goto="tab-perfil">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.6-4 5-6 8-6s6.4 2 8 6"/></svg>
+              Meu plano
+            </button>
+          </div>
+
+          <div>
+            <div class="section-title" style="margin-bottom:10px;">Próxima reserva</div>
+            <div id="upcoming-slot"></div>
+          </div>
+
+          <div>
+            <div class="section-title" style="margin-bottom:10px;">Destinos em destaque</div>
+            <div class="dest-scroll" id="dest-scroll"></div>
+          </div>
+        </section>
+
+        <!-- DESTINOS -->
+        <section class="tabpanel" id="tab-destinos">
+          <div class="dest-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input type="search" id="dest-search-input" placeholder="Buscar destino ou região…" />
+          </div>
+          <div class="section-title">Destinos do clube</div>
+          <div class="dest-list" id="dest-list"></div>
+          <p class="dest-empty hidden" id="dest-empty">Nenhum destino encontrado para essa busca.</p>
+        </section>
+
+        <!-- EXTRATO -->
+        <section class="tabpanel" id="tab-extrato">
+          <div class="section-title">Extrato de pontos</div>
+          <div class="hist-card" id="hist-list"></div>
+        </section>
+
+        <!-- PERFIL -->
+        <section class="tabpanel" id="tab-perfil">
+          <div class="section-title">Minha conta</div>
+          <div class="profile-card">
+            <div class="profile-row"><span class="k">Nome</span><span class="v" id="prof-name">—</span></div>
+            <div class="profile-row"><span class="k">E-mail</span><span class="v" id="prof-email">—</span></div>
+            <div class="profile-row"><span class="k">Categoria</span><span class="v" id="prof-tier">—</span></div>
+            <div class="profile-row"><span class="k">Pontos por ano</span><span class="v tabular" id="prof-yearly">—</span></div>
+          </div>
+          <div class="section-title">Categorias do clube</div>
+          <div class="tier-table" id="tier-table"></div>
+          <button class="btn-logout" id="btn-logout">Sair da conta</button>
+        </section>
+      </div>
+
+      <div class="tabbar">
+        <button class="tab-btn active" data-tab="tab-dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+          Início
+        </button>
+        <button class="tab-btn" data-tab="tab-destinos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5.5-5.5 2 2-5.5z"/></svg>
+          Destinos
+        </button>
+        <button class="tab-btn" data-tab="tab-extrato">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"/></svg>
+          Extrato
+        </button>
+        <button class="tab-btn" data-tab="tab-perfil">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.6-4 5-6 8-6s6.4 2 8 6"/></svg>
+          Perfil
+        </button>
+      </div>
+    </div>
+
+    <!-- PHOTO LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+      <div class="lightbox-card">
+        <div class="lightbox-photo" id="lightbox-photo">
+          <button class="lightbox-close" id="lightbox-close" aria-label="Fechar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+          <div class="lightbox-dots" id="lightbox-dots"></div>
+        </div>
+        <div class="lightbox-info">
+          <span class="region" id="lightbox-region">—</span>
+          <h3 id="lightbox-name">—</h3>
+          <p id="lightbox-blurb">—</p>
+          <div class="lightbox-tags" id="lightbox-tags"></div>
+          <div class="lightbox-tips" id="lightbox-tips"></div>
+          <div class="row">
+            <span class="ppn tabular" id="lightbox-ppn">—</span>
+            <button class="btn-resgatar" id="lightbox-resgatar">Resgatar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOKING SHEET -->
+    <div class="sheet-backdrop" id="sheet-backdrop">
+      <div class="sheet">
+        <div class="sheet-handle"></div>
+        <h3 id="sheet-dest">Destino</h3>
+        <p class="sub" id="sheet-blurb">—</p>
+        <div class="field">
+          <label for="sheet-checkin">Check-in</label>
+          <input type="date" id="sheet-checkin" />
+        </div>
+        <div class="field">
+          <label>Noites</label>
+          <div class="stepper">
+            <button type="button" id="nights-minus">−</button>
+            <span class="n tabular" id="nights-n">3</span>
+            <button type="button" id="nights-plus">+</button>
+          </div>
+        </div>
+        <div class="sheet-summary">
+          <div class="row2"><span>Custo por noite</span><span class="tabular" id="sum-ppn">—</span></div>
+          <div class="row2"><span>Noites</span><span class="tabular" id="sum-nights">—</span></div>
+          <div class="row2 total"><span>Total em pontos</span><span class="tabular" id="sum-total">—</span></div>
+          <div class="row2"><span>Saldo após resgate</span><span class="tabular" id="sum-after">—</span></div>
+        </div>
+        <p class="sheet-warn" id="sheet-warn">Pontos insuficientes para este resgate.</p>
+        <button class="btn btn-primary" id="btn-confirm" style="margin-top:16px;">Confirmar resgate</button>
+        <button class="btn-ghost" id="btn-cancel-sheet" style="width:100%;">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var CONFIG = {
+    STORAGE_KEY: "infinityVC_demo_v1",
+    TIERS: window.DEFAULT_TIERS,
+    DESTINATIONS: window.DEFAULT_DESTINATIONS,
+    SEED_MEMBER: {
+      name: "Convidado(a) Infinity",
+      email: "convidado@infinityclube.com.br",
+      tier: "Ouro",
+      points: 15400,
+      expiringPoints: 2100,
+      expiringDate: "31/12/2026",
+      history: [
+        { date: "2026-01-10", desc: "Renovação anual de pontos — Categoria Ouro", delta: 20000 },
+        { date: "2026-02-22", desc: "Resgate — Gramado (4 noites)", delta: -1680 },
+        { date: "2026-04-05", desc: "Resgate — Natal (3 noites)", delta: -1080 },
+        { date: "2026-06-18", desc: "Bônus indicação de amigo", delta: 300 }
+      ],
+      upcoming: null
+    }
+  };
+
+  var DEST_STORAGE_KEY = "infinityVC_destinations_v1";
+  var TIERS_STORAGE_KEY = "infinityVC_tiers_v1";
+  (function seedDestinations() {
+    var raw = localStorage.getItem(DEST_STORAGE_KEY);
+    if (raw) { try { CONFIG.DESTINATIONS = JSON.parse(raw); } catch (e) {} }
+    else { localStorage.setItem(DEST_STORAGE_KEY, JSON.stringify(CONFIG.DESTINATIONS)); }
+    var rawTiers = localStorage.getItem(TIERS_STORAGE_KEY);
+    if (rawTiers) { try { CONFIG.TIERS = JSON.parse(rawTiers); } catch (e) {} }
+    else { localStorage.setItem(TIERS_STORAGE_KEY, JSON.stringify(CONFIG.TIERS)); }
+  })();
+
+  var state = null;
+  var sheetDest = null;
+  var sheetNights = 3;
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var currentStorageKey = null;
+  var isGuestSession = false;
+  var MEMBERS_KEY = "infinityVC_members_v1";
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(currentStorageKey);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function save() {
+    try { localStorage.setItem(currentStorageKey, JSON.stringify(state)); } catch (e) {}
+  }
+  function normalizeCpf(v) { return (v || "").replace(/\D/g, ""); }
+  function findMemberByCpf(cpf) {
+    var raw = localStorage.getItem(MEMBERS_KEY);
+    var members = [];
+    try { members = JSON.parse(raw) || []; } catch (e) {}
+    return members.filter(function (m) { return normalizeCpf(m.cpf) === cpf; })[0] || null;
+  }
+
+  function fmtPts(n) {
+    return n.toLocaleString("pt-BR");
+  }
+  function fmtDate(iso) {
+    var p = iso.split("-");
+    return p[2] + "/" + p[1] + "/" + p[0];
+  }
+  function destById(id) {
+    for (var i = 0; i < CONFIG.DESTINATIONS.length; i++) if (CONFIG.DESTINATIONS[i].id === id) return CONFIG.DESTINATIONS[i];
+    return null;
+  }
+
+  function destArtStyle(photo) {
+    return 'background-image:linear-gradient(180deg, rgba(16,38,61,0) 55%, rgba(16,38,61,0.35) 100%), url(\'' + photo + '\');' +
+      'background-size:cover;background-position:center;';
+  }
+
+  function renderAll() {
+    $("member-name").textContent = state.name;
+    $("member-tier").textContent = state.tier;
+    $("dash-points").textContent = fmtPts(state.points);
+    $("balance-member").textContent = state.name;
+    $("dash-expiring").textContent = state.expiringPoints > 0
+      ? fmtPts(state.expiringPoints) + " · " + state.expiringDate
+      : "Nenhum a vencer";
+
+    $("prof-name").textContent = state.name;
+    $("prof-email").textContent = state.email;
+    $("prof-tier").textContent = state.tier;
+    var tierCfg = CONFIG.TIERS.filter(function (t) { return t.name === state.tier; })[0];
+    $("prof-yearly").textContent = tierCfg ? fmtPts(tierCfg.pointsPerYear) + " pts/ano" : "—";
+
+    var tierTable = $("tier-table");
+    tierTable.innerHTML = "";
+    CONFIG.TIERS.forEach(function (t) {
+      var row = document.createElement("div");
+      row.className = "tier-row" + (t.name === state.tier ? " current" : "");
+      row.innerHTML = '<span class="tn">' + t.name + (t.name === state.tier ? " · atual" : "") + '</span><span class="tp tabular">' + fmtPts(t.pointsPerYear) + " pts/ano</span>";
+      tierTable.appendChild(row);
+    });
+
+    var up = $("upcoming-slot");
+    if (state.upcoming) {
+      var d = destById(state.upcoming.destId);
+      up.innerHTML = '<div class="upcoming-card"><div><div class="dest">' + d.name + '</div><div class="meta">' +
+        fmtDate(state.upcoming.checkin) + " · " + state.upcoming.nights + " noites</div></div><div class=\"pts tabular\">-" +
+        fmtPts(state.upcoming.total) + " pts</div></div>";
+    } else {
+      up.innerHTML = '<div class="upcoming-card" style="background:var(--surface);"><div class="meta">Nenhuma reserva no momento — resgate um destino para começar.</div></div>';
+    }
+
+    var scroll = $("dest-scroll");
+    scroll.innerHTML = "";
+    CONFIG.DESTINATIONS.forEach(function (d) {
+      var el = document.createElement("div");
+      el.className = "dest-mini";
+      el.innerHTML = '<div class="art" style="' + destArtStyle(d.photo) + '"></div><div class="body"><h4>' + d.name +
+        '</h4><div class="cost tabular">' + d.ppn + ' pts/noite</div></div>';
+      el.querySelector(".art").addEventListener("click", function () { openLightbox(d.id); });
+      scroll.appendChild(el);
+    });
+
+    renderDestList(CONFIG.DESTINATIONS);
+
+    var hist = $("hist-list");
+    hist.innerHTML = "";
+    state.history.slice().reverse().forEach(function (h) {
+      var row = document.createElement("div");
+      row.className = "hist-item";
+      var pos = h.delta > 0;
+      row.innerHTML = '<div><div class="desc">' + h.desc + '</div><div class="date">' + fmtDate(h.date) + '</div></div>' +
+        '<div class="delta tabular ' + (pos ? "pos" : "neg") + '">' + (pos ? "+" : "") + fmtPts(h.delta) + '</div>';
+      hist.appendChild(row);
+    });
+  }
+
+  function renderDestList(items) {
+    var list = $("dest-list");
+    list.innerHTML = "";
+    items.forEach(function (d) {
+      var card = document.createElement("article");
+      card.className = "dest-card";
+      card.innerHTML =
+        '<div class="art" style="' + destArtStyle(d.photo) + '"></div>' +
+        '<div class="body">' +
+        '<span class="region">' + d.region + '</span>' +
+        '<h3>' + d.name + '</h3>' +
+        '<p class="blurb">' + d.blurb + '</p>' +
+        '<div class="row"><span class="ppn tabular">' + d.ppn + ' <small>pts / noite</small></span>' +
+        '<button class="btn-resgatar" data-dest="' + d.id + '">Resgatar</button></div>' +
+        '</div>';
+      card.querySelector(".art").addEventListener("click", function () { openLightbox(d.id); });
+      card.querySelector(".btn-resgatar").addEventListener("click", function (e) { openSheet(e.currentTarget.dataset.dest); });
+      list.appendChild(card);
+    });
+    $("dest-empty").classList.toggle("hidden", items.length > 0);
+  }
+
+  function switchTab(tabId) {
+    document.querySelectorAll(".tabpanel").forEach(function (p) { p.classList.toggle("active", p.id === tabId); });
+    document.querySelectorAll(".tab-btn").forEach(function (b) { b.classList.toggle("active", b.dataset.tab === tabId); });
+  }
+
+  function openSheet(destId) {
+    sheetDest = destById(destId);
+    sheetNights = 3;
+    $("sheet-dest").textContent = sheetDest.name;
+    $("sheet-blurb").textContent = sheetDest.blurb;
+    var today = new Date();
+    today.setDate(today.getDate() + 14);
+    $("sheet-checkin").value = today.toISOString().slice(0, 10);
+    updateSheetSummary();
+    $("sheet-backdrop").classList.add("show");
+  }
+  function closeSheet() { $("sheet-backdrop").classList.remove("show"); }
+
+  var lightboxDest = null;
+  var lightboxPhotos = [];
+  var lightboxPhotoIdx = 0;
+
+  function setLightboxPhoto(i) {
+    lightboxPhotoIdx = i;
+    $("lightbox-photo").style.backgroundImage = "url('" + lightboxPhotos[i] + "')";
+    $("lightbox-dots").querySelectorAll("button").forEach(function (b, bi) {
+      b.classList.toggle("active", bi === i);
+    });
+  }
+
+  function openLightbox(destId) {
+    var d = destById(destId);
+    lightboxDest = d;
+    lightboxPhotos = [d.photo];
+    if (d.photo2) lightboxPhotos.push(d.photo2);
+    var dots = $("lightbox-dots");
+    dots.innerHTML = "";
+    if (lightboxPhotos.length > 1) {
+      lightboxPhotos.forEach(function (_, i) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.addEventListener("click", function () { setLightboxPhoto(i); });
+        dots.appendChild(b);
+      });
+    }
+    setLightboxPhoto(0);
+    $("lightbox-region").textContent = d.region;
+    $("lightbox-name").textContent = d.name;
+    $("lightbox-blurb").textContent = d.blurb;
+    var tagIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>';
+    $("lightbox-tags").innerHTML = (d.highlights || []).map(function (h) {
+      return "<span>" + tagIcon + h + "</span>";
+    }).join("");
+    var goodIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>';
+    var warnIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a2 2 0 0 0 1.7 3h15.2a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>';
+    var tipsHtml = "";
+    if (d.tipGood) tipsHtml += '<div class="tip good">' + goodIcon + '<span><strong>Ir:</strong> ' + d.tipGood + '</span></div>';
+    if (d.tipCaution) tipsHtml += '<div class="tip caution">' + warnIcon + '<span><strong>Atenção:</strong> ' + d.tipCaution + '</span></div>';
+    $("lightbox-tips").innerHTML = tipsHtml;
+    $("lightbox-ppn").innerHTML = d.ppn + ' <small style="font-weight:400;font-size:0.72rem;color:var(--ink-soft);">pts / noite</small>';
+    $("lightbox").classList.add("show");
+  }
+  function closeLightbox() { $("lightbox").classList.remove("show"); }
+
+  function updateSheetSummary() {
+    $("nights-n").textContent = sheetNights;
+    var total = sheetDest.ppn * sheetNights;
+    var after = state.points - total;
+    $("sum-ppn").textContent = sheetDest.ppn + " pts";
+    $("sum-nights").textContent = sheetNights;
+    $("sum-total").textContent = fmtPts(total) + " pts";
+    $("sum-after").textContent = fmtPts(after) + " pts";
+    var insufficient = after < 0;
+    $("sheet-warn").classList.toggle("show", insufficient);
+    $("btn-confirm").disabled = insufficient;
+  }
+
+  function confirmBooking() {
+    var total = sheetDest.ppn * sheetNights;
+    state.points -= total;
+    state.upcoming = { destId: sheetDest.id, checkin: $("sheet-checkin").value, nights: sheetNights, total: total };
+    state.history.push({ date: new Date().toISOString().slice(0, 10), desc: "Resgate — " + sheetDest.name + " (" + sheetNights + " noites)", delta: -total });
+    save();
+    closeSheet();
+    renderAll();
+    switchTab("tab-dashboard");
+    document.querySelectorAll(".tab-btn").forEach(function (b) { b.classList.toggle("active", b.dataset.tab === "tab-dashboard"); });
+    showToast("Resgate de " + sheetDest.name + " confirmado!");
+  }
+
+  var toastTimer = null;
+  function showToast(msg) {
+    $("toast-text").textContent = msg;
+    $("toast").classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { $("toast").classList.remove("show"); }, 2600);
+  }
+
+  function enterApp() {
+    $("screen-login").classList.add("hidden");
+    $("screen-app").classList.remove("hidden");
+    renderAll();
+  }
+
+  function startGuestSession() {
+    isGuestSession = true;
+    currentStorageKey = CONFIG.STORAGE_KEY;
+    state = load();
+    if (!state) {
+      state = JSON.parse(JSON.stringify(CONFIG.SEED_MEMBER));
+      save();
+    }
+    enterApp();
+  }
+
+  function startMemberSession(member) {
+    isGuestSession = false;
+    currentStorageKey = "infinityVC_memberstate_" + member.id;
+    state = load();
+    if (!state) {
+      var tierCfg = CONFIG.TIERS.filter(function (t) { return t.name === member.tier; })[0];
+      var pts = tierCfg ? tierCfg.pointsPerYear : 0;
+      state = {
+        name: member.name,
+        email: member.email,
+        tier: member.tier,
+        points: pts,
+        expiringPoints: 0,
+        expiringDate: "—",
+        history: [{
+          date: (member.createdAt || new Date().toISOString()).slice(0, 10),
+          desc: "Cadastro e liberação de acesso — Categoria " + member.tier,
+          delta: pts
+        }],
+        upcoming: null
+      };
+      save();
+    }
+    enterApp();
+  }
+
+  function logout() {
+    if (isGuestSession) { try { localStorage.removeItem(currentStorageKey); } catch (e) {} }
+    state = null;
+    currentStorageKey = null;
+    $("screen-app").classList.add("hidden");
+    $("screen-login").classList.remove("hidden");
+    $("login-cpf") && ($("login-cpf").value = "");
+    $("login-error") && ($("login-error").textContent = "");
+  }
+
+  function tickClock() {
+    var d = new Date();
+    var hh = String(d.getHours()).padStart(2, "0");
+    var mm = String(d.getMinutes()).padStart(2, "0");
+    $("clock").textContent = hh + ":" + mm;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    tickClock();
+    setInterval(tickClock, 30000);
+
+    $("splash-logo-img").src = window.LOGO_WHITE;
+    $("login-logo-img").src = window.LOGO_WHITE;
+    $("header-logo-mark").src = window.LOGO_WHITE;
+
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setTimeout(function () {
+      $("screen-splash").classList.add("hide");
+      $("screen-splash").setAttribute("aria-hidden", "true");
+    }, reduceMotion ? 700 : 2400);
+
+    $("btn-login").addEventListener("click", function () {
+      var cpf = normalizeCpf($("login-cpf").value);
+      var pass = $("login-pass").value.trim();
+      if (cpf.length < 11) { $("login-error").textContent = "Digite um CPF válido."; return; }
+      var member = findMemberByCpf(cpf);
+      if (!member) { $("login-error").textContent = "CPF não encontrado. Peça para o vendedor te cadastrar."; return; }
+      if (member.password && pass !== member.password) { $("login-error").textContent = "Senha incorreta."; return; }
+      $("login-error").textContent = "";
+      startMemberSession(member);
+    });
+    $("btn-demo").addEventListener("click", startGuestSession);
+    $("btn-forgot").addEventListener("click", function () {
+      var cpf = normalizeCpf($("login-cpf").value);
+      if (cpf.length < 11) { $("login-error").textContent = "Digite seu CPF acima para recuperar a senha."; return; }
+      var member = findMemberByCpf(cpf);
+      if (!member) { $("login-error").textContent = "CPF não encontrado."; return; }
+      if (!member.email) { $("login-error").textContent = "Sem e-mail cadastrado — fale com o vendedor."; return; }
+      if (!window.mailApi) { $("login-error").textContent = "Recuperação de senha só funciona no app instalado."; return; }
+      $("login-error").textContent = "Enviando e-mail...";
+      window.mailApi.sendPasswordReset({ name: member.name, email: member.email, cpf: $("login-cpf").value, password: member.password })
+        .then(function (r) {
+          $("login-error").textContent = r.ok ? "Senha reenviada para o seu e-mail." : "Falha ao enviar: " + r.error;
+        });
+    });
+    $("btn-logout").addEventListener("click", logout);
+    $("btn-refresh").addEventListener("click", function () { renderAll(); showToast("Saldo atualizado."); });
+
+    document.querySelectorAll(".tab-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () { switchTab(btn.dataset.tab); });
+    });
+    document.querySelectorAll("[data-goto]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        switchTab(btn.dataset.goto);
+        document.querySelectorAll(".tab-btn").forEach(function (b) { b.classList.toggle("active", b.dataset.tab === btn.dataset.goto); });
+      });
+    });
+
+    $("nights-minus").addEventListener("click", function () { if (sheetNights > 1) { sheetNights--; updateSheetSummary(); } });
+    $("nights-plus").addEventListener("click", function () { if (sheetNights < 21) { sheetNights++; updateSheetSummary(); } });
+    $("btn-confirm").addEventListener("click", confirmBooking);
+    $("btn-cancel-sheet").addEventListener("click", closeSheet);
+    $("sheet-backdrop").addEventListener("click", function (e) { if (e.target === $("sheet-backdrop")) closeSheet(); });
+
+    $("lightbox-close").addEventListener("click", closeLightbox);
+    $("lightbox-photo").addEventListener("click", function (e) {
+      if (e.target.closest("#lightbox-close") || e.target.closest("#lightbox-dots")) return;
+      if (lightboxPhotos.length > 1) setLightboxPhoto((lightboxPhotoIdx + 1) % lightboxPhotos.length);
+    });
+    $("lightbox").addEventListener("click", function (e) { if (e.target === $("lightbox")) closeLightbox(); });
+    $("lightbox-resgatar").addEventListener("click", function () {
+      var destId = lightboxDest.id;
+      closeLightbox();
+      openSheet(destId);
+    });
+
+    $("dest-search-input").addEventListener("input", function (e) {
+      var q = e.target.value.trim().toLowerCase();
+      var filtered = CONFIG.DESTINATIONS.filter(function (d) {
+        return d.name.toLowerCase().includes(q) || d.region.toLowerCase().includes(q);
+      });
+      renderDestList(filtered);
+    });
+
+  });
+
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  }
+})();
+</script>
