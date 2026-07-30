@@ -131,6 +131,19 @@
   .login-brand { text-align: center; margin-bottom: 34px; }
   .login-logo { width: 220px; height: auto; margin: 0 auto; }
   .login-brand .tag { color: rgba(244,248,250,0.72); font-size: 0.85rem; margin-top: 16px; }
+  .install-btn {
+    display: none; align-items: center; justify-content: center; gap: 8px; width: 100%;
+    margin: 18px 0 0; padding: 12px 16px; border-radius: 10px; font-weight: 700; font-size: 0.88rem;
+    background: linear-gradient(135deg, var(--aqua-bright), var(--aqua)); color: var(--on-accent);
+  }
+  .install-btn.show { display: flex; }
+  .install-btn svg { width: 17px; height: 17px; }
+  .ios-hint {
+    display: none; margin-top: 14px; padding: 12px 14px; border-radius: 10px; font-size: 0.8rem; line-height: 1.5;
+    background: rgba(244,248,250,0.08); color: rgba(244,248,250,0.82);
+  }
+  .ios-hint.show { display: block; }
+  .ios-hint svg { width: 14px; height: 14px; display: inline-block; vertical-align: -2px; color: var(--aqua-bright); }
   .field { margin-bottom: 14px; }
   .field label { display: block; font-size: 0.78rem; font-weight: 700; margin-bottom: 6px; color: rgba(244,248,250,0.75); }
   .field input {
@@ -229,6 +242,46 @@
   .quick-btn svg { width: 20px; height: 20px; color: var(--aqua); }
 
   .section-title { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-soft); font-weight: 700; }
+
+  /* family banner */
+  .family-banner {
+    position: relative; overflow: hidden; border-radius: 16px; min-height: 108px;
+    background: linear-gradient(135deg, #123A57 0%, var(--frame) 100%); color: #F4F8FA;
+    display: flex; align-items: flex-end; padding: 16px 18px;
+  }
+  .family-banner-scene { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .family-banner-text { position: relative; z-index: 1; max-width: 62%; }
+  .family-banner-text strong { display: block; font-size: 0.98rem; line-height: 1.3; }
+  .family-banner-text span { display: block; font-size: 0.8rem; color: rgba(244,248,250,0.72); margin-top: 4px; }
+
+  /* tips carousel */
+  .tips-carousel { position: relative; }
+  .tips-track { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -20px; padding: 0 20px 4px; }
+  .tip-card {
+    scroll-snap-align: start; flex: none; width: 82%; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 14px 16px; display: flex; gap: 10px; align-items: flex-start; box-shadow: var(--shadow);
+  }
+  .tip-card svg { width: 18px; height: 18px; flex: none; margin-top: 1px; color: var(--good); }
+  .tip-card.caution svg { color: var(--warn); }
+  .tip-card .dest { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); font-weight: 700; }
+  .tip-card p { font-size: 0.86rem; margin-top: 3px; }
+  .tips-dots { display: flex; gap: 6px; justify-content: center; margin-top: 10px; }
+  .tips-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+  .tips-dots span.active { background: var(--aqua); width: 14px; border-radius: 4px; }
+
+  /* entrance + tab transition animations */
+  @keyframes riseIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .tabpanel.active > * { animation: riseIn 0.35s ease both; }
+  .tabpanel.active > *:nth-child(1) { animation-delay: 0s; }
+  .tabpanel.active > *:nth-child(2) { animation-delay: 0.04s; }
+  .tabpanel.active > *:nth-child(3) { animation-delay: 0.08s; }
+  .tabpanel.active > *:nth-child(4) { animation-delay: 0.12s; }
+  .tabpanel.active > *:nth-child(5) { animation-delay: 0.16s; }
+  .tabpanel.active > *:nth-child(6) { animation-delay: 0.2s; }
+  .dest-card, .dest-mini { animation: riseIn 0.3s ease both; }
+  @media (prefers-reduced-motion: reduce) {
+    .tabpanel.active > *, .dest-card, .dest-mini { animation: none; }
+  }
 
   .upcoming-card {
     background: var(--aqua-soft); border: 1px solid var(--line); border-radius: 14px; padding: 16px;
@@ -475,6 +528,15 @@
         <img class="login-logo" id="login-logo-img" src="" alt="Infinity Vacation Club" />
         <p class="tag">Área do associado — meus pontos de férias</p>
       </div>
+      <button class="install-btn" id="btn-install-app">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        Instalar como aplicativo
+      </button>
+      <div class="ios-hint" id="ios-hint">
+        <strong>Instalar no iPhone:</strong> toque em
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0-13l-4 4m4-4l4 4"/><rect x="4" y="9" width="16" height="12" rx="2"/></svg>
+        (Compartilhar) e depois em "Adicionar à Tela de Início".
+      </div>
       <div class="field">
         <label for="login-cpf">CPF</label>
         <input id="login-cpf" type="text" inputmode="numeric" placeholder="000.000.000-00" autocomplete="off" />
@@ -543,6 +605,28 @@
             </button>
           </div>
 
+          <div class="family-banner">
+            <svg class="family-banner-scene" viewBox="0 0 300 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+              <circle cx="252" cy="26" r="20" fill="var(--gold)" opacity="0.85"/>
+              <path d="M0 92 Q40 74 80 92 T160 92 T240 92 T320 92 V120 H0 Z" fill="rgba(244,248,250,0.08)"/>
+              <path d="M0 104 Q40 86 80 104 T160 104 T240 104 T320 104 V120 H0 Z" fill="rgba(244,248,250,0.14)"/>
+              <g>
+                <circle cx="150" cy="70" r="11" fill="#FFD9B0"/>
+                <rect x="139" y="80" width="22" height="30" rx="10" fill="var(--aqua-bright)"/>
+                <circle cx="176" cy="64" r="13" fill="#F2C08A"/>
+                <rect x="163" y="76" width="26" height="34" rx="11" fill="#F4F8FA"/>
+                <circle cx="124" cy="66" r="12" fill="#FFD9B0"/>
+                <rect x="112" y="77" width="24" height="33" rx="11" fill="var(--gold)"/>
+                <circle cx="103" cy="78" r="8" fill="#F2C08A"/>
+                <rect x="94" y="86" width="18" height="24" rx="9" fill="var(--aqua-bright)"/>
+              </g>
+            </svg>
+            <div class="family-banner-text">
+              <strong>Feito para reunir quem você ama.</strong>
+              <span>Resgate uma viagem em família com seus pontos Infinity.</span>
+            </div>
+          </div>
+
           <div>
             <div class="section-title" style="margin-bottom:10px;">Próxima reserva</div>
             <div id="upcoming-slot"></div>
@@ -551,6 +635,14 @@
           <div>
             <div class="section-title" style="margin-bottom:10px;">Destinos em destaque</div>
             <div class="dest-scroll" id="dest-scroll"></div>
+          </div>
+
+          <div>
+            <div class="section-title" style="margin-bottom:10px;">Dicas de viagem</div>
+            <div class="tips-carousel" id="tips-carousel">
+              <div class="tips-track" id="tips-track"></div>
+              <div class="tips-dots" id="tips-dots"></div>
+            </div>
           </div>
         </section>
 
@@ -698,6 +790,16 @@
     else { localStorage.setItem(TIERS_STORAGE_KEY, JSON.stringify(CONFIG.TIERS)); }
   })();
 
+  async function refreshSharedData() {
+    if (!window.storeApi) return;
+    try {
+      var dests = await window.storeApi.get(DEST_STORAGE_KEY);
+      if (dests) CONFIG.DESTINATIONS = dests;
+      var tiers = await window.storeApi.get(TIERS_STORAGE_KEY);
+      if (tiers) CONFIG.TIERS = tiers;
+    } catch (e) {}
+  }
+
   var state = null;
   var sheetDest = null;
   var sheetNights = 3;
@@ -718,10 +820,15 @@
     try { localStorage.setItem(currentStorageKey, JSON.stringify(state)); } catch (e) {}
   }
   function normalizeCpf(v) { return (v || "").replace(/\D/g, ""); }
-  function findMemberByCpf(cpf) {
-    var raw = localStorage.getItem(MEMBERS_KEY);
+  async function findMemberByCpf(cpf) {
     var members = [];
-    try { members = JSON.parse(raw) || []; } catch (e) {}
+    try {
+      if (window.storeApi) {
+        members = (await window.storeApi.get(MEMBERS_KEY)) || [];
+      } else {
+        members = JSON.parse(localStorage.getItem(MEMBERS_KEY)) || [];
+      }
+    } catch (e) {}
     return members.filter(function (m) { return normalizeCpf(m.cpf) === cpf; })[0] || null;
   }
 
@@ -927,7 +1034,8 @@
     renderAll();
   }
 
-  function startGuestSession() {
+  async function startGuestSession() {
+    await refreshSharedData();
     isGuestSession = true;
     currentStorageKey = CONFIG.STORAGE_KEY;
     state = load();
@@ -938,7 +1046,8 @@
     enterApp();
   }
 
-  function startMemberSession(member) {
+  async function startMemberSession(member) {
+    await refreshSharedData();
     isGuestSession = false;
     currentStorageKey = "infinityVC_memberstate_" + member.id;
     state = load();
@@ -995,21 +1104,22 @@
       $("screen-splash").setAttribute("aria-hidden", "true");
     }, reduceMotion ? 700 : 2400);
 
-    $("btn-login").addEventListener("click", function () {
+    $("btn-login").addEventListener("click", async function () {
       var cpf = normalizeCpf($("login-cpf").value);
       var pass = $("login-pass").value.trim();
       if (cpf.length < 11) { $("login-error").textContent = "Digite um CPF válido."; return; }
-      var member = findMemberByCpf(cpf);
+      $("login-error").textContent = "Verificando...";
+      var member = await findMemberByCpf(cpf);
       if (!member) { $("login-error").textContent = "CPF não encontrado. Peça para o vendedor te cadastrar."; return; }
       if (member.password && pass !== member.password) { $("login-error").textContent = "Senha incorreta."; return; }
       $("login-error").textContent = "";
       startMemberSession(member);
     });
     $("btn-demo").addEventListener("click", startGuestSession);
-    $("btn-forgot").addEventListener("click", function () {
+    $("btn-forgot").addEventListener("click", async function () {
       var cpf = normalizeCpf($("login-cpf").value);
       if (cpf.length < 11) { $("login-error").textContent = "Digite seu CPF acima para recuperar a senha."; return; }
-      var member = findMemberByCpf(cpf);
+      var member = await findMemberByCpf(cpf);
       if (!member) { $("login-error").textContent = "CPF não encontrado."; return; }
       if (!member.email) { $("login-error").textContent = "Sem e-mail cadastrado — fale com o vendedor."; return; }
       if (!window.mailApi) { $("login-error").textContent = "Recuperação de senha só funciona no app instalado."; return; }
@@ -1062,6 +1172,32 @@
 
   if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
     navigator.serviceWorker.register("sw.js").catch(function () {});
+  }
+
+  var isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
+  if (!isStandalone) {
+    var isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    var deferredInstallPrompt = null;
+    window.addEventListener("beforeinstallprompt", function (e) {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      var btn = document.getElementById("btn-install-app");
+      if (btn) btn.classList.add("show");
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      if (isIos) {
+        var hint = document.getElementById("ios-hint");
+        if (hint) hint.classList.add("show");
+      }
+      var installBtn = document.getElementById("btn-install-app");
+      if (installBtn) {
+        installBtn.addEventListener("click", function () {
+          if (!deferredInstallPrompt) return;
+          deferredInstallPrompt.prompt();
+          deferredInstallPrompt.userChoice.then(function () { deferredInstallPrompt = null; installBtn.classList.remove("show"); });
+        });
+      }
+    });
   }
 })();
 </script>
