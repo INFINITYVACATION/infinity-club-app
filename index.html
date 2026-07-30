@@ -970,6 +970,8 @@
     });
   }
 
+  var tipsAutoTimer = null;
+  var tipsUserInteracted = false;
   function renderTipsCarousel() {
     var track = $("tips-track");
     var dots = $("tips-dots");
@@ -983,14 +985,38 @@
     CONFIG.DESTINATIONS.forEach(function (d) {
       if (d.tipCaution) cards.push({ dest: d.name, icon: warnIcon, cls: "caution", text: d.tipCaution });
     });
+    for (var i = cards.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = cards[i]; cards[i] = cards[j]; cards[j] = t;
+    }
     track.innerHTML = cards.map(function (c) {
       return '<div class="tip-card ' + c.cls + '">' + c.icon + '<div><div class="dest">' + c.dest + '</div><p>' + c.text + '</p></div></div>';
     }).join("");
-    dots.innerHTML = cards.slice(0, 8).map(function (_, i) { return '<span' + (i === 0 ? ' class="active"' : '') + '></span>'; }).join("");
+    dots.innerHTML = cards.map(function (_, i) { return '<span' + (i === 0 ? ' class="active"' : '') + '></span>'; }).join("");
+
+    function goToTip(idx) {
+      var card = track.children[idx];
+      if (!card) return;
+      track.scrollTo({ left: card.offsetLeft - 20, behavior: tipsUserInteracted ? "auto" : "smooth" });
+      dots.querySelectorAll("span").forEach(function (s, i) { s.classList.toggle("active", i === idx); });
+    }
     track.onscroll = function () {
       var idx = Math.round(track.scrollLeft / (track.firstChild ? track.firstChild.offsetWidth + 12 : 1));
       dots.querySelectorAll("span").forEach(function (s, i) { s.classList.toggle("active", i === idx); });
     };
+    ["pointerdown", "wheel", "touchstart"].forEach(function (evt) {
+      track.addEventListener(evt, function () { tipsUserInteracted = true; }, { passive: true });
+    });
+
+    clearInterval(tipsAutoTimer);
+    if (cards.length > 1 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      var current = 0;
+      tipsAutoTimer = setInterval(function () {
+        if (tipsUserInteracted) return;
+        current = (current + 1) % cards.length;
+        goToTip(current);
+      }, 4500);
+    }
   }
 
   function renderDestList(items) {
